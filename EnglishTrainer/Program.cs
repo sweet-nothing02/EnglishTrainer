@@ -6,7 +6,11 @@ namespace EnglishTrainer
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var botClient = new BotWorker();
+
+            botClient.Initialize();
+            botClient.Start();
+
         }
     }
 }
