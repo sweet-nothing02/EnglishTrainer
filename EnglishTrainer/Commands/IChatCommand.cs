@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace EnglishTrainer
 {
-    public static class BotCredentials
+    public interface IChatCommand
     {
-        public static readonly string BotToken = "";
+        bool CheckMessage(string message);
     }
 }
