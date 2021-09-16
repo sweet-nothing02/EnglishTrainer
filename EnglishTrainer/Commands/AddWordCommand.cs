@@ -22,7 +22,8 @@ namespace EnglishTrainer.Commands
             this.botClient = botClient;
 
             Buffer = new Dictionary<long, Word>();
-        }
+        } 
+
 
         public async void StartProcessAsync(Conversation chat)
         {
@@ -33,9 +34,40 @@ namespace EnglishTrainer.Commands
             await SendCommandText(text, chat.GetId());
         }
 
-        private async Task SendCommandText(string text, long chatNumber)
+        public async Task DoForStageAsync(AddingState addingState, Conversation chat, string message)
         {
-            await botClient.SendTextMessageAsync(chatId: chatNumber, text: text);
+            var word = Buffer[chat.GetId()];
+            var text = "";
+
+            switch (addingState)
+            {
+                case AddingState.Russian:
+                    word.Rus = message;
+
+                    text = "Введите слово на английском";
+                    break;
+                case AddingState.English:
+                    word.Eng = message;
+
+                    text = "Введите тематику";
+                    break;
+                case AddingState.Theme:
+                    word.Theme = message;
+
+                    text = $"Успешно! Слово {word.Eng} добавлено в словарь.";
+
+                    chat.dictionary.Add(word.Rus, word);
+
+                    Buffer.Remove(chat.GetId());
+                    break;
+            }
+
+            await SendCommandText(text, chat.GetId());
+        }
+
+        private async Task SendCommandText(string text, long chat)
+        {
+            await botClient.SendTextMessageAsync(chatId: chat, text: text);
         }
     }
 }

@@ -17,15 +17,94 @@ namespace EnglishTrainer
 
         public Dictionary<string, Word> dictionary;
 
+        public bool IsAddingInProcess;
+
+        public bool IsTraininginProcess;
 
         public Conversation(Chat chat)
         {
-
+            telegramChat = chat;
+            telegramMessages = new List<Message>();
+            dictionary = new Dictionary<string, Word>();
         }
 
-        public long GetId()
+        public void AddMessage(Message message)
         {
-            return telegramChat.Id;
+            telegramMessages.Add(message);
+        }
+
+        public void AddWord(string key, Word word)
+        {
+            dictionary.Add(key, word);
+        }
+
+        public void ClearHistory()
+        {
+            telegramMessages.Clear();
+        }
+
+        public List<string> GetTextMessages()
+        {
+            var textMessages = new List<string>();
+
+            foreach (var message in telegramMessages)
+                if (message.Text != null)
+                    textMessages.Add(message.Text);
+
+            return textMessages;
+        }
+
+        public long GetId() => telegramChat.Id;
+
+        public string GetLastMessage() => telegramMessages[telegramMessages.Count - 1].Text;
+
+        public string GetTrainingWord(TrainingType type)
+        {
+            var rand = new Random();
+            var item = rand.Next(0, dictionary.Count);
+
+            var randomWord = dictionary.Values.AsEnumerable().ElementAt(item);
+
+            var text = string.Empty;
+
+            switch (type)
+            {
+                case TrainingType.EngToRus:
+                    text = randomWord.Eng;
+                    break;
+                case TrainingType.RusToEng:
+                    text = randomWord.Rus;
+                    break;
+            }
+
+            return text;
+        }
+
+        public bool CheckWord(TrainingType type, string word, string answer)
+        {
+            Word control;
+
+            var result = false;
+
+            switch (type)
+            {
+                case TrainingType.EngToRus:
+                    control = dictionary.Values.FirstOrDefault(x => x.Eng == word);
+
+                    result = control.Rus == answer;
+
+                    break;
+                case TrainingType.RusToEng:
+                    control = dictionary[word];
+
+                    result = control.Eng == answer;
+
+                    break;
+            }
+
+            if(result == true)
+
+            return result;
         }
     }
 }

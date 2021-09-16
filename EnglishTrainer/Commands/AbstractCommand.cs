@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EnglishTrainer.Commands
 {
-    class AbstractCommand : IChatCommand
+    public abstract class AbstractCommand : IChatCommand
     {
         public string CommandText;
 

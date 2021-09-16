@@ -12,19 +12,19 @@ namespace EnglishTrainer
         public string Rus { get; set; }
 
         public string Theme { get; set; }
+    }
 
-        public enum TrainingType
-        {
-            RusToEng,
-            EngToRus
-        }
+    public enum TrainingType
+    {
+        RusToEng,
+        EngToRus
+    }
 
-        public enum State
-        {
-            Rusiian,
-            English,
-            Theme,
-            Finish
-        }
+    public enum AddingState
+    {
+        Russian,
+        English,
+        Theme,
+        Finish
     }
 }
