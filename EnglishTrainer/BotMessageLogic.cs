@@ -9,7 +9,7 @@ using Telegram.Bot.Types;
 
 namespace EnglishTrainer
 {
-    class BotMessageLogic
+    public class BotMessageLogic
     {
         private Messenger messenger;
 

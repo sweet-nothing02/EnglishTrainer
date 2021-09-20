@@ -9,11 +9,11 @@ using Telegram.Bot.Types;
 
 namespace EnglishTrainer
 {
-    class Conversation
+    public class Conversation
     {
-        private Chat telegramChat;
+        protected Chat telegramChat;
 
-        private List<Message> telegramMessages;
+        protected List<Message> telegramMessages;
 
         public Dictionary<string, Word> dictionary;
 
@@ -102,8 +102,8 @@ namespace EnglishTrainer
                     break;
             }
 
-            if(result == true)
-
+            if (result == true)
+                Counter.AddScore(0);
             return result;
         }
     }

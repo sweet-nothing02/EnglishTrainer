@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EnglishTrainer
 {
-    class Word
+    public class Word
     {
         public string Eng { get; set; }
         public string Rus { get; set; }
