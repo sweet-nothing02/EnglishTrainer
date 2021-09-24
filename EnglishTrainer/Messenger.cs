@@ -26,7 +26,17 @@ namespace EnglishTrainer
 
         private void RegisterCommands()
         {
-            parser.AddCommand
+            parser.AddCommand(new SayHiCommand());
+            parser.AddCommand(new AddWordCommand(botClient));
+            parser.AddCommand(new DeleteWordCommand());
+            parser.AddCommand(new TrainingCommand(botClient));
+            parser.AddCommand(new StopTrainingCommand());
+        }
+
+        public async Task MakeAnswer(Conversation chat)
+        {
+            var lastMessage = chat.GetLastMessage();
+
         }
     }
 }
