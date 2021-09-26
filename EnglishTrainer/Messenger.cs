@@ -37,6 +37,11 @@ namespace EnglishTrainer
         {
             var lastMessage = chat.GetLastMessage();
 
+            if(chat.IsTraininginProcess && !parser.IsTextCommand(lastMessage))
+            {
+                parser.
+            }
+
         }
     }
 }
