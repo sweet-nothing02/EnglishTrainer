@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EnglishTrainer.Commands
 {
-    class DeleteWordCommand : ChatTextCommandOption, IChatTextCommandWithAction
+    public class DeleteWordCommand : ChatTextCommandOption, IChatTextCommandWithAction
     {
         public DeleteWordCommand()
         {
@@ -15,12 +15,24 @@ namespace EnglishTrainer.Commands
 
         public bool DoAction(Conversation chat)
         {
-            var message = chat.G
+            var message = chat.GetLastMessage();
+
+            var text = ClearMessageFromCommand(message);
+
+            if (chat.dictionary.ContainsKey(text))
+            {
+                chat.dictionary.Remove(text);
+                return true;
+            }
+
+            return false;
         }
 
         public string ReturnText()
         {
-            throw new NotImplementedException();
+            return "Слово успешно удалено!";
         }
+
+
     }
 }

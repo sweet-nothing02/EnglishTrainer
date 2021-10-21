@@ -9,11 +9,22 @@ using Telegram.Bot.Types;
 
 namespace EnglishTrainer.Commands
 {
-    class StopTrainingCommand : IChatCommand
+    public class StopTrainingCommand : AbstractCommand, IChatTextCommandWithAction
     {
-        public bool CheckMessage(string message)
+        public StopTrainingCommand()
         {
-            throw new NotImplementedException();
+            CommandText = "/stop";
+        }
+
+        public bool DoAction(Conversation chat)
+        {
+            chat.IsTraningInProcess = false;
+            return !chat.IsTraningInProcess;
+        }
+
+        public string ReturnText()
+        {
+            return $"Тренировка остановлена!\nВаша оценка: {100 * Counter.Mark(Counter.scoreDelegate, Counter.totalNumberDelegate)} из 100";
         }
     }
 }

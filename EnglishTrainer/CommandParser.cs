@@ -11,7 +11,7 @@ using EnglishTrainer.Commands;
 
 namespace EnglishTrainer
 {
-    class CommandParser
+    public class CommandParser
     {
         private List<IChatCommand> Command;
 
@@ -51,25 +51,25 @@ namespace EnglishTrainer
         {
             var command = Command.Find(x => x.CheckMessage(message)) as IChatTextCommand;
 
-            if(command is IChatTextCommandWithAction)
+            if (command is IChatTextCommandWithAction)
             {
-                if(!(command as IChatTextCommandWithAction).DoAction(chat))
+                if (!(command as IChatTextCommandWithAction).DoAction(chat))
                 {
                     return "Ошибка выполнения команды!";
-                }
+                };
             }
 
             return command.ReturnText();
         }
 
-        public string GetInformationalMessage(string message)
+        public string GetInformationalMeggase(string message)
         {
             var command = Command.Find(x => x.CheckMessage(message)) as IKeyboardCommand;
 
             return command.InformationalMessage();
         }
 
-        public InlineKeyboardMarkup GetKeyboard(string message)
+        public InlineKeyboardMarkup GetKeyBoard(string message)
         {
             var command = Command.Find(x => x.CheckMessage(message)) as IKeyboardCommand;
 
@@ -89,28 +89,33 @@ namespace EnglishTrainer
             return command is AddWordCommand;
         }
 
-        public void StartAdiingWord(string message, Conversation chat)
+        public void StartAddingWord(string message, Conversation chat)
         {
             var command = Command.Find(x => x.CheckMessage(message)) as AddWordCommand;
 
             addingController.AddFirstState(chat);
             command.StartProcessAsync(chat);
+
         }
 
         public void NextStage(string message, Conversation chat)
         {
-            var command = Command.Find(x => x.CheckMessage(message)) as AddWordCommand;
+            var command = Command.Find(x => x is AddWordCommand) as AddWordCommand;
 
             command.DoForStageAsync(addingController.GetStage(chat), chat, message);
 
             addingController.NextStage(message, chat);
+
         }
+
 
         public void ContinueTraining(string message, Conversation chat)
         {
-            var command = Command.Find(x => x.CheckMessage(message)) as TrainingCommand;
+            var command = Command.Find(x => x is TrainingCommand) as TrainingCommand;
 
-            command.
+            command.NextStepAsync(chat, message);
+
         }
+
     }
 }

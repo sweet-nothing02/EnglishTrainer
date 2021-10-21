@@ -11,7 +11,7 @@ namespace EnglishTrainer
 {
     public class BotMessageLogic
     {
-        private Messenger messenger;
+        private Messenger messanger;
 
         private Dictionary<long, Conversation> chatList;
 
@@ -20,8 +20,9 @@ namespace EnglishTrainer
         public BotMessageLogic(ITelegramBotClient botClient)
         {
             this.botClient = botClient;
-            messenger = new Messenger();
+            messanger = new Messenger(botClient);
             chatList = new Dictionary<long, Conversation>();
+
         }
 
         public async Task Response(MessageEventArgs e)
@@ -30,10 +31,23 @@ namespace EnglishTrainer
 
             if (!chatList.ContainsKey(Id))
             {
-                var newChat = new Conversation(e.Message.Chat);
+                var newchat = new Conversation(e.Message.Chat);
 
-                chatList.Add(Id, newChat);
+                chatList.Add(Id, newchat);
             }
+
+            var chat = chatList[Id];
+
+            chat.AddMessage(e.Message);
+
+            await SendMessage(chat);
+
+        }
+
+        private async Task SendMessage(Conversation chat)
+        {
+            await messanger.MakeAnswer(chat);
+
         }
     }
 }

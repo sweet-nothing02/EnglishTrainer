@@ -9,15 +9,16 @@ using Telegram.Bot.Types;
 
 namespace EnglishTrainer
 {
-    class BotWorker
+    public class BotWorker
     {
-        private static ITelegramBotClient botClient;
+        private ITelegramBotClient botClient;
         private BotMessageLogic logic;
 
-        public void Initialize()
+        public void Inizalize()
         {
             botClient = new TelegramBotClient(BotCredentials.BotToken);
             logic = new BotMessageLogic(botClient);
+
         }
 
         public void Start()
@@ -33,7 +34,7 @@ namespace EnglishTrainer
 
         private async void Bot_OnMessage(object sender, MessageEventArgs e)
         {
-            if(e.Message != null)
+            if (e.Message != null)
             {
                 await logic.Response(e);
             }

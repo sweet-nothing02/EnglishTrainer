@@ -8,14 +8,21 @@ namespace EnglishTrainer
     {
         static void Main(string[] args)
         {
-            string token = "";
-            var bot = new TelegramBotClient(token);
-            bot.StartReceiving();
-            var botClient = new BotWorker();
+            var bot = new BotWorker();
 
-            botClient.Initialize();
-            botClient.Start();
+            bot.Inizalize();
+            bot.Start();
 
+            Console.WriteLine("Напишите stop для прекращения работы");
+
+            string command;
+            do
+            {
+                command = Console.ReadLine();
+
+            } while (command != "stop");
+
+            bot.Stop();
         }
     }
 }

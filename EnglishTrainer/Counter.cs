@@ -3,25 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Telegram.Bot;
-using Telegram.Bot.Args;
-using Telegram.Bot.Types;
 
 namespace EnglishTrainer
 {
-    public class Counter
+    class Counter
     {
-        public delegate long AddScoreDelegate(long currentScore);
-        AddScoreDelegate score = AddScore;
+        private static int currentScore = 0;
 
-        public static long AddScore(long currentScore)
+        private static int totalNumber = 0;
+
+        public static Func<int> scoreDelegate = Score;
+
+        public static Func<int> totalNumberDelegate = TotalNumber;
+
+        public static int Score()
         {
             return currentScore++;
         }
 
-        public double GetMark(AddScoreDelegate score, Chat chat)
+        public static int TotalNumber()
         {
-            return score(0) / chat.Id;
+            return totalNumber++;
+        }
+
+        public static double Mark(Func<int> score, Func<int> totalNumber)
+        {
+            var newScore = score();
+            var newTotalNumber = totalNumber();
+            return newScore / newTotalNumber;
         }
     }
 }

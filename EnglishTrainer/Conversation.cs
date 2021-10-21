@@ -11,15 +11,15 @@ namespace EnglishTrainer
 {
     public class Conversation
     {
-        protected Chat telegramChat;
+        private Chat telegramChat;
 
-        protected List<Message> telegramMessages;
+        private List<Message> telegramMessages;
 
         public Dictionary<string, Word> dictionary;
 
         public bool IsAddingInProcess;
 
-        public bool IsTraininginProcess;
+        public bool IsTraningInProcess;
 
         public Conversation(Chat chat)
         {
@@ -48,8 +48,12 @@ namespace EnglishTrainer
             var textMessages = new List<string>();
 
             foreach (var message in telegramMessages)
+            {
                 if (message.Text != null)
+                {
                     textMessages.Add(message.Text);
+                }
+            }
 
             return textMessages;
         }
@@ -63,17 +67,18 @@ namespace EnglishTrainer
             var rand = new Random();
             var item = rand.Next(0, dictionary.Count);
 
-            var randomWord = dictionary.Values.AsEnumerable().ElementAt(item);
+            var randomword = dictionary.Values.AsEnumerable().ElementAt(item);
 
             var text = string.Empty;
 
             switch (type)
             {
                 case TrainingType.EngToRus:
-                    text = randomWord.Eng;
+                    text = randomword.Eng;
                     break;
+
                 case TrainingType.RusToEng:
-                    text = randomWord.Rus;
+                    text = randomword.Rus;
                     break;
             }
 
@@ -88,12 +93,15 @@ namespace EnglishTrainer
 
             switch (type)
             {
+
                 case TrainingType.EngToRus:
+
                     control = dictionary.Values.FirstOrDefault(x => x.Eng == word);
 
                     result = control.Rus == answer;
 
                     break;
+
                 case TrainingType.RusToEng:
                     control = dictionary[word];
 
@@ -102,9 +110,8 @@ namespace EnglishTrainer
                     break;
             }
 
-            if (result == true)
-                Counter.AddScore(0);
             return result;
         }
+
     }
 }

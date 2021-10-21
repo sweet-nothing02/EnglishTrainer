@@ -8,6 +8,6 @@ namespace EnglishTrainer
 {
     public static class BotCredentials
     {
-        public static readonly string BotToken = "";
+        public static readonly string BotToken = "1957711333:AAHwpuxK0OOWRXlEYFaePiYxCiLoVsykzoE";
     }
 }

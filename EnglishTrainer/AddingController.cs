@@ -22,10 +22,10 @@ namespace EnglishTrainer
 
         public void NextStage(string message, Conversation chat)
         {
-            var currentState = ChatAdding[chat.GetId()];
-            ChatAdding[chat.GetId()] = currentState + 1;
+            var currentstate = ChatAdding[chat.GetId()];
+            ChatAdding[chat.GetId()] = currentstate + 1;
 
-            if(ChatAdding[chat.GetId()] == AddingState.Finish)
+            if (ChatAdding[chat.GetId()] == AddingState.Finish)
             {
                 chat.IsAddingInProcess = false;
                 ChatAdding.Remove(chat.GetId());
@@ -36,5 +36,6 @@ namespace EnglishTrainer
         {
             return ChatAdding[chat.GetId()];
         }
+
     }
 }
