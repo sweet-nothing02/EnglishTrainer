@@ -9,6 +9,5 @@ namespace EnglishTrainer
     public interface IChatCommand
     {
         bool CheckMessage(string message);
-
     }
 }
