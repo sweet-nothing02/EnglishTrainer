@@ -6,7 +6,6 @@ namespace Commands
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
         }
     }
 }
